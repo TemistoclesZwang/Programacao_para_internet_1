@@ -12,11 +12,16 @@ def banco():
    return cur.fetchall()
 
 
+def auto_cita(link):
+   print('')
+
+
 ranking = {}
 def response_and_soup(link):
    response = requests.get(link,verify=False)
    soup = BeautifulSoup(response.text, 'html.parser')
    return soup
+
 
 def organizar_ranking ():
    organizar = dict(sorted(ranking.items(), \
@@ -25,11 +30,6 @@ def organizar_ranking ():
    [print(f"{site}: {ocorrencia}") \
       for site, ocorrencia in organizar.items()]
 
-
-
-def auto_cita(link):
-   print('')
-   
 
 def criterio_google(link,keyword):
    #procura pela palavra no google, se o site estiver entre os primeiros
@@ -53,7 +53,6 @@ tmp = 0
 links_teste = []
 
 def profundidade_padrao(keyword,link):
-   
    if link not in controle_de_loop:
       print('\n🔎 procurando termo em:',link)
       se_tem_keyword(keyword,link)
@@ -71,7 +70,6 @@ def profundidade_padrao(keyword,link):
 
    else:
       links_referencias.append(link)
-
 
 
 links_referencias=[]
