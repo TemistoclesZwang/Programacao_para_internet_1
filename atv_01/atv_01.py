@@ -3,8 +3,8 @@ import requests_cache
 from bs4 import BeautifulSoup
 import re
 
-requests_cache.install_cache('banco') #! desativar para localhost
-# requests_cache.install_cache('banco', expire_after= 60)
+requests_cache.install_cache('banco') #! bug desativar para localhost
+requests_cache.install_cache('banco', expire_after= 60)
 
 ################### ORGANIZADORES ###################
 ranking = {}
@@ -13,23 +13,7 @@ def response_and_soup(link):
    soup = BeautifulSoup(response.text, 'html.parser')
    return soup
 
-
-def criterio_auto_citacao(link_inicial):
-   #se tiver o site original, pinta vermelho e no fim
-   padrao = r"(https?://)(.*?\.com)"
-   extrair_dominio = re.search(padrao, link_inicial)
-   dominio = extrair_dominio.group(1)\
-         +extrair_dominio.group(2)
-
-   for site in list(ranking):
-      if dominio in site:
-         #mover para o final
-         item_a = ranking.pop(site)
-         ranking['🔴'+site] = item_a
-      else:
-         valor = ranking.pop(site)
-         ranking['🟢'+site] = valor
-   separa_verde_vermelho()
+#
 
 
 def separa_verde_vermelho():
@@ -113,6 +97,24 @@ def profundidade_recursiva(keyword,tmp,prof):
 
 ################### CRITERIOS ###################
 
+def criterio_auto_citacao(link_inicial):
+   #se tiver o site original, pinta vermelho e no fim
+   padrao = r"(https?://)(.*?\.com)"
+   extrair_dominio = re.search(padrao, link_inicial)
+   dominio = extrair_dominio.group(1)\
+         +extrair_dominio.group(2)
+
+   for site in list(ranking):
+      if dominio in site:
+         #mover para o final
+         item_a = ranking.pop(site)
+         ranking['🔴'+site] = item_a
+      else:
+         valor = ranking.pop(site)
+         ranking['🟢'+site] = valor
+   separa_verde_vermelho()
+   
+   
 def criterio_referencias(links_referencias):
    #como verifica apontamentos só funciona com profundidade > 0
    for item in links_referencias:
@@ -172,7 +174,7 @@ def se_tem_keyword(termo,link):
 
 ################### INICIO ###################
 def search(keyword,url,depth):
-   if depth > 5:
+   if depth > 4:
       print('insira uma profundidade menor')
    else:
       profundidade_padrao(keyword,url) #limitando resultados
@@ -188,7 +190,7 @@ search ('Brasil','https://www.infomoney.com.br/',3)
 # search ('Brasil','https://www.folha.uol.com.br/',0)
 
 
-#devido ao não uso de links internos definido na linha 91
+#devido ao não uso de todos os links internos definido na linha 91
    #o código se sai melhor com grandes profundidades 
    #(já que existe um limitador na linha 87)
    #por isso a performance até a profundidade 4 é relativamente boa
