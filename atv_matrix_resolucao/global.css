@@ -1,0 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+
+}
+
+html{
+    --black: #061303;
+    --white: #e2ffe8;
+    --verde: #3ac02d;
+    --verdeEscuro: #30723e;
+    --cinza: #879288;
+
+    font-size: 62.5% /*. é igual 10px */
+}
+
+body, button, input, textarea{
+    /* intervalo de tamanho */
+    font-size: clamp(14px, 2rem, 2vw);
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+
