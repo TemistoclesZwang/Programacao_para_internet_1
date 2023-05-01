@@ -1,0 +1,5 @@
+ul#placas li img{
+    list-style: none;
+    /* border-radius: 10rem; */
+    width: 3rem;
+}

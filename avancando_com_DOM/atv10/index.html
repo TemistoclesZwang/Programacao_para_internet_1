@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clonar elementos</title>
+</head>
+
+<body>
+    <ul id="lista-cima">
+        <li id="1">a</li>
+        <li id="2">b</li>
+        <li id="3">c</li>
+        <li id="4">d</li>
+    </ul>
+    <button id="btn-mover-baixo">mover \/</button>
+
+    <ul id="lista-baixo">
+    </ul>
+    <button id="btn-mover-cima">mover /\</button>
+
+
+    <script>
+        let btnElementoBaixo = document.getElementById("btn-mover-baixo")
+        let btnElementoCima = document.getElementById("btn-mover-cima")
+
+        btnElementoBaixo.addEventListener("click", function () {
+            mover(btnElementoBaixo)
+        })
+
+        btnElementoCima.addEventListener("click", function () {
+            mover(btnElementoCima)
+        })
+        
+        function mover(direcao) {
+            let listaCima = null
+            let listaBaixo = null
+            let pai = null
+
+            if (direcao === btnElementoBaixo) {
+                lista = document.getElementById("lista-cima").children
+
+                if (lista.length > 0) {
+                    listaBaixo = document.getElementById("lista-baixo")
+                    pai = document.getElementById("lista-cima")
+
+                    // seleciona primeiro li e cria o novo
+                    const primeiroNo = lista[0]
+                    const novoLi = document.createElement('li')
+
+                    // atribui ao novo Li o nome do antigo
+                    novoLi.setAttribute('id', primeiroNo.getAttribute('id'))
+                    novoLi.innerHTML = primeiroNo.innerHTML
+
+                    // add e remove li
+                    listaBaixo.appendChild(novoLi)
+                    pai.removeChild(primeiroNo)
+                } else {
+                    alert("Fim da lista!")
+                }
+            } else {
+                lista = document.getElementById("lista-baixo").children
+
+                if (lista.length > 0) {
+                    listaCima = document.getElementById("lista-cima")
+                    pai = document.getElementById("lista-baixo")
+
+                    // seleciona primeiro li e cria o novo
+                    const primeiroNo = lista[0]
+                    const novoLi = document.createElement('li')
+
+                    // atribui ao novo Li o nome do antigo
+                    novoLi.setAttribute('id', primeiroNo.getAttribute('id'))
+                    novoLi.innerHTML = primeiroNo.innerHTML
+
+                    // add e remove li
+                    listaCima.appendChild(novoLi)
+                    pai.removeChild(primeiroNo)
+                } else {
+                    alert("Fim da lista!")
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
