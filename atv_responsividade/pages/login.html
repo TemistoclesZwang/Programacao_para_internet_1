@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/global.css">
+    <link rel="stylesheet" href="login.css">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div class=wrp>
+        <div class=wrpLogin>
+            <form onSubmit="handleSubmit">
+                <img class=logo src="/assets/logo.png" alt="logo da empresa" />
+                <div class='saudacoes'>
+                    <h1>Bem-vindo</h1>
+                    <h3>Faça seu login</h3>
+                </div>
+                <label htmlFor="email">Email:</label>
+                <input type="email" id="email" value="email" onChange="handleEmailChange" />
+
+                <label htmlFor="password">Password:</label>
+                <input type="password" id="password" value="password" onChange="handlePasswordChange" />
+
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+        <div class=bonecos>
+            <img src="/assets/loginPeople.png" alt="bonecos 3d" />
+        </div>
+    </div>
+</body>
+
+</html>

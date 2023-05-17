@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    --meuBranco: #eefbff;
+    --azulBranco: #b9eeff;
+    --azulClaro: #88aaff;
+    --azulMedio: #3964d0;
+    --azulEscuro: #122963;
+
+    font-size: 62.5% /*. é igual 10px */
+}
+
+body, button, input, textarea{
+    /* intervalo de tamanho */
+    font-size: clamp(14px, 2rem, 2vw);
+    font-family: 'Open Sans', sans-serif;
+}
+
+button{
+    padding: .3rem;
+}
+
+

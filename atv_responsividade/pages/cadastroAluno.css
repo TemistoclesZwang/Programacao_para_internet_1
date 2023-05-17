@@ -1,0 +1,64 @@
+#container{
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    gap: 5rem;
+    flex-wrap: wrap;
+    max-width: 1024px;
+    background: linear-gradient(to bottom, #e3e9f7, #eef8fd);
+    border-radius: 1rem;
+    margin: 4rem;
+
+    /* margin: 0 auto; */
+
+    /* flex-direction: column; */
+    /* align-items: center; */
+}
+
+
+#container > #formulario {
+    margin: 3rem;
+    /* para centralizar com a foto */
+}
+
+
+#alunoOuEmpresa{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+}
+
+
+#formulario{
+    margin-right: 3rem;
+}
+#formulario input {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.imagem button{
+    margin-top: 2rem;
+}
+
+.imagem {
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* height: 100vh; Ajuste a altura conforme necessário */
+}
+
+
+/* .flex {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .flex > div {
+    flex: 1 1 200px;
+    margin: 10px;
+  } */

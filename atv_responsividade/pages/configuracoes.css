@@ -1,0 +1,75 @@
+#container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5rem;
+    margin-top: 3rem;
+    background: linear-gradient(to bottom, #e3e9f7, #eef8fd);
+    border-radius: 1rem;
+    margin: 4rem;
+    /* max-width: 1024px; */
+    height: 100vh;
+
+
+
+}
+
+.bloco {
+    display: flex;
+    border-radius: 5rem;
+    margin: 5rem;
+    padding-top: 2rem;
+    max-height: 30rem;
+    height: 100%;
+    max-width: 90rem;
+    width: 100%;
+    background-color: #adcdf7;
+}
+
+.nome > p {
+    font-size: 2.3rem;
+    font-style: bold;
+    margin-right: 5rem;
+
+}
+
+.trocarFoto > img {
+    width: 60%;
+    height: auto;
+}
+
+.trocarFoto {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    flex-direction: column;
+}
+
+.tema {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    flex-direction: column;
+    margin-right: 5rem;
+}
+
+.notificacoes {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    flex-direction: column;
+}
+
+
+
+/* .flex {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.flex > div {
+    flex: 1 1 200px;
+    margin: 10px;
+  } */
