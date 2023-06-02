@@ -9,12 +9,12 @@ import cors from 'cors';
 // const data = require("./data/data.json");
 
 const app = express()
-const data = new Data();
 
 app.use(express.json());
 app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
+const data = new Data();
 
 
 
@@ -40,14 +40,14 @@ app.get("/posts/:id", async function (request: Request, response: Response) {
 app.post("/posts", async function (request: Request, response: Response) {
   // const { id,text,likes} = request.body; //.posso pegar os 3 do cliente
   const idUniversal = uuidv4()
-  const { text,title } = request.body; //.pegando somente text
+  const { text,title } = request.body;
+  console.log(text,title);
+  
   const newPost = new Post(idUniversal,title, text, 0);
 
-  data.create(newPost)
-  console.log(newPost);
-  
   response.json({ newPost });
   response.status(201).send()
+  await data.create(newPost);
 
 });
 

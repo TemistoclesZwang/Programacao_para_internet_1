@@ -19,19 +19,21 @@ export class Data {
     }
 
     private createTable(): void {
+        
         const query: string = `
             CREATE TABLE IF NOT EXISTS posts (
                 id TEXT PRIMARY KEY,
                 title TEXT,
-                txt TEXT,
-                likes INTEGER
+                text TEXT,
+                likes INTEGER,
+                data TEXT
             )
         `;
         this.db.run(query, (err) => {
             if (err) {
                 console.error('Erro ao criar a tabela:', err);
             } else {
-                console.log('Tabela criada com sucesso!');
+                console.log('Tabela criada com sucesso!!!');
             }
         });
     }
@@ -58,9 +60,9 @@ export class Data {
 
     async create(post: Post) {
         try {
-            const query = `INSERT INTO posts (id,title, txt, likes) VALUES (?, ?, ?, ?)`;
+            const query = `INSERT INTO posts (id, title, text, likes) VALUES (?, ?, ?, ?)`;
             return new Promise((resolve, reject) => {
-                this.db.run(query, [post.id, post.title,post.text, post.likes], function (err) {
+                this.db.run(query, [post.id, post.title, post.text, post.likes], function (err) {
                     if (err) {
                         console.error('Erro ao inserir dados:', err);
                         reject(err);
@@ -107,7 +109,7 @@ export class Data {
         const paramsUpdate: string[] = [];
 
         if (novoText !== '') {
-            updateQuery += ' txt = ?,';
+            updateQuery += ' text = ?,';
             paramsUpdate.push(novoText);
         }
         if (novoTitle !== '') {
