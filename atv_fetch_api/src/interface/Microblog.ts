@@ -19,10 +19,10 @@ export class Data {
     }
 
     private createTable(): void {
-        // . a tabela não pode se  chamar text se não gera bug com o tipo text
         const query: string = `
             CREATE TABLE IF NOT EXISTS posts (
                 id TEXT PRIMARY KEY,
+                title TEXT,
                 txt TEXT,
                 likes INTEGER
             )
@@ -38,7 +38,6 @@ export class Data {
 
 
     async retrieveAll() {
-        // !qual tipo de retorno deveria ser usado em typescript aqui
         try {
             const query: string = `SELECT * FROM posts`;
             return new Promise((resolve, reject) => {
@@ -59,9 +58,9 @@ export class Data {
 
     async create(post: Post) {
         try {
-            const query = `INSERT INTO posts (id, txt, likes) VALUES (?, ?, ?)`;
+            const query = `INSERT INTO posts (id,title, txt, likes) VALUES (?, ?, ?, ?)`;
             return new Promise((resolve, reject) => {
-                this.db.run(query, [post.id, post.text, post.likes], function (err) {
+                this.db.run(query, [post.id, post.title,post.text, post.likes], function (err) {
                     if (err) {
                         console.error('Erro ao inserir dados:', err);
                         reject(err);
@@ -86,7 +85,6 @@ export class Data {
             const query: string = `SELECT * FROM posts WHERE id = ?`;
             return new Promise((resolve, reject) => {
                 this.db.get(query, [id], (err, row: any) => {
-                    // ! pode dar algum bug pelo tipo do row
                     if (err) {
                         console.error('Erro ao obter post:', err);
                         reject(err)
@@ -103,7 +101,7 @@ export class Data {
         }
     };
 
-    async update(id: string, novoText: string, novoLike: number) {
+    async update(id: string, novoTitle: string,novoText: string, novoLike: number) {
         //para verificar se o usuário quer modificar text, likes ou os dois
         let updateQuery = 'UPDATE posts SET';
         const paramsUpdate: string[] = [];
@@ -112,11 +110,13 @@ export class Data {
             updateQuery += ' txt = ?,';
             paramsUpdate.push(novoText);
         }
-
+        if (novoTitle !== '') {
+            updateQuery += ' title = ?,';
+            paramsUpdate.push(novoText);
+        }
         if (novoLike !== undefined) {
             updateQuery += ' likes = ?,';
             paramsUpdate.push(novoLike.toString());
-            // .verificar se vai ter algum bug
         }
 
         updateQuery = updateQuery.slice(0, -1); //pra tirar a vírgula da query

@@ -37,10 +37,12 @@ app.get("/posts/:id", async function (request: Request, response: Response) {
 app.post("/posts", async function (request: Request, response: Response) {
   // const { id,text,likes} = request.body; //.posso pegar os 3 do cliente
   const idUniversal = uuidv4()
-  const { text } = request.body; //.pegando somente text
-  const newPost = new Post(idUniversal, text, 0);
+  const { text,title } = request.body; //.pegando somente text
+  const newPost = new Post(idUniversal,title, text, 0);
 
   data.create(newPost)
+  console.log(newPost);
+  
   response.json({ newPost });
   response.status(201).send()
 
@@ -51,13 +53,13 @@ app.put("/posts/:id", async function (request: Request, response: Response) {
   const id: string = request.params.id
 
   if (await data.retrieve(id) !== undefined) {
-    const { text, likes } = request.body;
-    if (!text || !likes) {
-      return response.status(400).json({ error: "text e likes são obrigatórios" });
+    const { text,title, likes } = request.body;
+    if (!text || !likes || !title) {
+      return response.status(400).json({ error: "text,likes e title são obrigatórios" });
     }
-    const newPost = new Post(id, text, likes);
+    const newPost = new Post(id, title,text, likes);
     response.status(200).send()
-    await data.update(id, newPost.text, newPost.likes)
+    await data.update(id, newPost.title,newPost.text, newPost.likes)
 
   } else {
     response.status(404).send()
@@ -71,12 +73,12 @@ app.patch("/posts/:id", async function (request: Request, response: Response) {
 
 
   if (await data.retrieve(id) !== undefined) {
-    const { text, likes } = request.body;
+    const { title,text, likes } = request.body;
 
-    const newPost = new Post(id, text, likes);
+    const newPost = new Post(id,title, text, likes);
 
     response.status(200).send()
-    await data.update(id, newPost.text, newPost.likes)
+    await data.update(id, newPost.title,newPost.text, newPost.likes)
 
   } else {
     response.status(404).send()
@@ -92,10 +94,10 @@ app.patch("/posts/:id/like", async function (request: Request, response: Respons
     const retrieveJustLikes:number = retrieveId['likes']
     const addLike:number = retrieveJustLikes + 1
 
-    const newPost = new Post(id, '', addLike);
+    const newPost = new Post(id, '','', addLike);
 
     response.status(200).send()
-    await data.update(id, newPost.text, newPost.likes)
+    await data.update(id, newPost.title,newPost.text, newPost.likes)
 
   } else {
     console.log();
