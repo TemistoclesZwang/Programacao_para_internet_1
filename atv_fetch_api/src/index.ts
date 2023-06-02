@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Data } from './interface/Microblog';
 import { Post } from './interface/post';
 import express = require('express');
+import cors from 'cors';
 
 // const data = require("./data/data.json");
 
@@ -11,6 +12,8 @@ const app = express()
 const data = new Data();
 
 app.use(express.json());
+app.use(cors());
+
 app.use(express.urlencoded({ extended: true }));
 
 
