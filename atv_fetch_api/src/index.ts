@@ -24,8 +24,6 @@ app.get('/', (request: Request, response: Response) => {
 })
 
 app.get("/posts", async function (request: Request, response: Response) {
-
-
   response.json(await data.retrieveAll());
   console.log(await data.retrieveAll());
 });
@@ -73,7 +71,7 @@ app.put("/posts/:id", async function (request: Request, response: Response) {
 // ;patch
 app.patch("/posts/:id", async function (request: Request, response: Response) {
   const id: string = request.params.id
-
+// .poderia implementar a letra c da quesao 3 aqui
 
   if (await data.retrieve(id) !== undefined) {
     const { title,text, likes } = request.body;
