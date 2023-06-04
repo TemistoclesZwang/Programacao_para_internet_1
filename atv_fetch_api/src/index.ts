@@ -2,6 +2,8 @@
 import { Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { Data } from './interface/Microblog';
+import { ComentariosDb } from './interface/ComentariosDb';
+import { Comentario } from './interface/Comentario';
 import { Post } from './interface/post';
 import express = require('express');
 import cors from 'cors';
@@ -15,8 +17,23 @@ app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 const data = new Data();
+const comentarios = new ComentariosDb();
 
 
+// ;post comentarios
+app.post("/posts/:id/comments", async function (request: Request, response: Response) {
+  // const { id,text,likes} = request.body; //.posso pegar os 3 do cliente
+  const idUniversal = uuidv4()
+  const { text,title } = request.body;
+  console.log(text,title);
+  
+  const newPost = new Post(idUniversal,title, text, 0);
+
+  response.json({ newPost });
+  response.status(201).send()
+  await data.create(newPost);
+
+});
 
 //;get 
 app.get('/', (request: Request, response: Response) => {

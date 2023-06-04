@@ -30,8 +30,6 @@ async function delPost(id) {
     };
 
     await fetch(`http://localhost:3000/posts/${id}`, config);
-    // const oneMoreLike = await response.json();
-    // return (oneMoreLike.addLike);
 }
 
 
@@ -96,7 +94,7 @@ appendPost = (post) => {
 
     btnDel.addEventListener("click", async (event) => {
         event.preventDefault();
-        const confirmacao = confirm("Tem certeza que deseja excluir este item?");
+        const confirmacao = confirm("Excluir este item?");
 
         if (confirmacao) {
             await delPost(post.id);
