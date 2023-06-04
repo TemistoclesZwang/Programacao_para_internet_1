@@ -97,12 +97,12 @@ app.patch("/posts/:id/like", async function (request: Request, response: Respons
 
     const newPost = new Post(id, '','', addLike);
 
+    response.json({ addLike});
     response.status(200).send()
+
     await data.update(id, newPost.title,newPost.text, newPost.likes)
 
   } else {
-    console.log();
-    
     response.status(404).send()
   }
 });
