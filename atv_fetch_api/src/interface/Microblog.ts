@@ -114,7 +114,7 @@ export class Data {
         }
         if (novoTitle !== '') {
             updateQuery += ' title = ?,';
-            paramsUpdate.push(novoText);
+            paramsUpdate.push(novoText); //; CHECAR SE ESTA CERTO
         }
         if (novoLike !== undefined) {
             updateQuery += ' likes = ?,';

@@ -14,6 +14,7 @@ export class ComentariosDb {
         `);
     }
 
+
     async joinPosts() {
         try {
             const query = `
@@ -22,7 +23,7 @@ export class ComentariosDb {
             JOIN Comentarios ON Posts.id = Comentarios.id_post
             `;
             return new Promise((resolve, reject) => {
-                this.db.all(query, [],(err, rows) => {
+                this.db.all(query, [], (err, rows) => {
                     if (err) {
                         console.error('Erro ao fazer join:', err);
                         reject(err);
@@ -38,6 +39,28 @@ export class ComentariosDb {
             throw error;
         }
     }
+
+    async comen(idPost: string) {
+        try {
+            const query: string = `SELECT comentario FROM Comentarios WHERE id_post = ?`;
+            return new Promise((resolve, reject) => {
+                this.db.all(query, [idPost], (err, rows) => {
+                    if (err) {
+                        console.error('Erro ao obter comentarios:', err);
+                        reject(err);
+                    } else {
+                        // const comentarios = rows.map((row:any) => row.comentario);
+                        // console.log(comentarios);
+                        resolve(rows);
+                    }
+                });
+            });
+        } catch (error) {
+            console.error('Erro ao obter posts:', error);
+            throw error;
+        }
+    }
+
     async create(comentario: Comentario) {
         try {
             const query: string = `INSERT INTO Comentarios (comentario, id_post) VALUES (?, ?)`;
@@ -58,6 +81,7 @@ export class ComentariosDb {
         }
     }
 
+
     async retrieveAll() {
         try {
             const query: string = `SELECT * FROM Comentarios`;
@@ -76,6 +100,103 @@ export class ComentariosDb {
             console.error('Erro ao obter posts:', error);
             throw error;
         }
+    }
+
+    async retrieve(id: string): Promise<any> { //! testar
+
+        //. quando o ID não é encontrado retorna unfedined e não da erro
+        try {
+            const query: string = `SELECT * FROM Comentarios WHERE id = ?`;
+            return new Promise((resolve, reject) => {
+                this.db.get(query, [id], (err, row: any) => {
+                    if (err) {
+                        console.error('Erro ao obter Comentario:', err);
+                        reject(err)
+                        // return null
+                    } else {
+                        // console.log(row);
+                        // resolve(row);
+                        return row;
+                    }
+                });
+            });
+        } catch (error) {
+            console.error('Erro ao obter Comentarios:', error);
+            throw error;
+        }
+    };
+
+
+    async update(comentarioId: string, novoComentario: string) { //!testar
+        //para verificar se o usuário quer modificar text, likes ou os dois
+        let updateQuery = 'UPDATE Comentarios SET';
+        const paramsUpdate: string[] = [];
+
+        if (novoComentario !== '') {
+            updateQuery += ' comentario = ?,';
+            paramsUpdate.push(novoComentario);
+        }
+
+        updateQuery = updateQuery.slice(0, -1); //pra tirar a vírgula da query
+
+        updateQuery += ' WHERE id = ?';
+        paramsUpdate.push(comentarioId);
+
+        try {
+            const query: string = `SELECT * FROM Comentarios WHERE id = ?`;
+            return new Promise((resolve, reject) => {
+                this.db.get(query, [comentarioId], (err, row) => {
+                    if (err) {
+                        console.error('Erro ao obter comentario:', err);
+                        reject(err)
+                        return null
+                    } else {
+                        this.db.run(updateQuery, paramsUpdate, (err) => {
+                            if (err) {
+                                console.error('Erro ao atualizar comentario:', err);
+                            } else {
+                                // só precisa de um print não precisa resolve
+                                return (console.log('comentario atualizado com sucesso!'));
+                            }
+                        });
+                    }
+                });
+            });
+        } catch (error) {
+            console.error('Erro ao obter comentarios:', error);
+            throw error;
+        }
+
+    }
+
+
+    async delete(id: string) { //! testar
+        try {
+            const query: string = `SELECT * FROM Comentarios WHERE id = ?`;
+            return new Promise((resolve, reject) => {
+                this.db.get(query, [id], (err, row) => {
+                    if (err) {
+                        console.error('Erro ao obter comentario:', err);
+                        reject(err)
+                        return null
+                    } else {
+                        const queryDelete = `DELETE FROM Comentarios WHERE id = ?`;
+                        this.db.run(queryDelete, [id], (err) => {
+                            if (err) {
+                                console.error('Erro ao atualizar comentario:', err);
+                            } else {
+                                // só precisa de um print não precisa resolve
+                                return (console.log('comentario excluido com sucesso!'));
+                            }
+                        });
+                    }
+                });
+            });
+        } catch (error) {
+            console.error('Erro ao obter comentarios:', error);
+            throw error;
+        }
+
     }
 }
 
