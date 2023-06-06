@@ -60,19 +60,19 @@ app.post("/comentarios", async function (request: Request, response: Response) {
 app.put("/comentarios/:comentarioIdUrl", async function (request: Request, response: Response) {
   const comentarioIdUrl: string = request.params.comentarioIdUrl
 
-  console.log('retorno',comentarioIdUrl);
+  // console.log('retorno',comentarioIdUrl);
 
   if (await cmm.retrieve(comentarioIdUrl) !== undefined) {
-    const { text} = request.body;
+    const { comentario} = request.body;
 
-    if (!text) {
+    if (!comentario) {
       return response.status(400).json({ error: "text é obrigatório" });
     }
 
     // const newCmm = new Comentario(text,comentarioId);
     // !testar
     response.status(200).send()
-    await cmm.update(comentarioIdUrl, text)
+    await cmm.update(comentarioIdUrl, comentario)
 
   } else {
     response.status(404).send()
@@ -89,7 +89,6 @@ app.patch("/comentarios/:comentarioId", async function (request: Request, respon
     const { text } = request.body;
 
     // const newCmm = new Comentario(id,title, text, likes);
-    // !testar
     response.status(200).send()
     await cmm.update(comentarioId, text)
 
