@@ -9,6 +9,7 @@ export class ComentariosDb {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             comentario TEXT,
             id_post TEXT,
+            data_time TEXT DEFAULT (datetime('now')),
             FOREIGN KEY (id_post) REFERENCES Posts(id)
         )
         `);
@@ -42,7 +43,7 @@ export class ComentariosDb {
 
     async comen(idPost: string) {
         try {
-            const query: string = `SELECT comentario FROM Comentarios WHERE id_post = ?`;
+            const query: string = `SELECT comentario,data_time FROM Comentarios WHERE id_post = ? ORDER BY data_time DESC`;
             return new Promise((resolve, reject) => {
                 this.db.all(query, [idPost], (err, rows) => {
                     if (err) {
