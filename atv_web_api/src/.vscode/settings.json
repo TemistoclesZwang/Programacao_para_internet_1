@@ -1,0 +1,11 @@
+{
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#220596",
+        "titleBar.activeBackground": "#3008D2",
+        "titleBar.activeForeground": "#FCFCFF"
+    },
+    "code-runner.executorMap": {
+        "typescript": "ts-node"
+    }
+    
+}

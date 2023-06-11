@@ -15,7 +15,7 @@ class Collection {
         }
     }
 
-    update(id, updatedPost) {//! errado
+    update(id, updatedPost) {
         const index = this.elements.findIndex((post) => post.id === id);
         if (index !== -1) {
             this.elements[index] = updatedPost;
