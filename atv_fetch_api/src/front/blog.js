@@ -7,26 +7,6 @@ const loadPosts = async () => {
     });
 }
 
-async function addCmm(IdPost, text) {
-
-    const newPost = {
-        "id_post": IdPost,
-        "text": text,
-    };
-
-    const config = {
-        'method': 'POST',
-        'headers': {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newPost)
-    };
-
-    const response = await fetch('http://localhost:3000/comentarios', config);
-    const post = await response.json();
-    appendPost(post);
-}
-
 
 async function addLike(id) {
     const config = {
@@ -76,7 +56,6 @@ async function getCmmByPostId(postId) {
     };
 
     const response = await fetch(`http://localhost:3000/posts/${postId}/comentarios`, config);
-    // console.log(response);
     return await response.json();
 
 }
@@ -155,12 +134,6 @@ appendPost = (post) => {
     const getCmm = postElement.querySelectorAll('textarea');
 
 
-// ! organizar os comentario por data
-
-    // const postId = postElement.querySelectorAll('input[name="id-like"]')[0];
-    // postId.innerText = post.id
-    // const selectPostId = postId.innerText;
-
     //. coloca comentarios e datas nos posts
     const promiseComentarios = getCmmByPostId(post.id)
 
@@ -177,7 +150,6 @@ appendPost = (post) => {
             postItens[3].innerText = comentario
         }
     });
-    // console.log(getAllCmm()); 
 
 
     btnLike.onclick = async (event) => {
@@ -201,20 +173,13 @@ appendPost = (post) => {
         event.preventDefault();
         const extrairTextoDoCmm = getCmm[0].value
         await sendCmm(extrairTextoDoCmm,post.id)
-        // !atualizar aqui com data e comentario
-        // postItens[2].innerText = 'data test'
-        // postItens[3].innerText = extrairTextoDoCmm
-
-        // console.log(extrairTextoDoCmm,post.id);
         console.log(getCmm[0].innerText);
-        // .refatorar
+
     });
 
 
     document.getElementById('timeline').append(postElement);
-// ! fazer o comentaŕio aparecer na tela quando clicar no botão
-// !limitar a 3 comentarios 
-// ! botão de cancelar limpa text area
+
 }
 
 

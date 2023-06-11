@@ -52,13 +52,13 @@ var Data = /** @class */ (function () {
         });
     }
     Data.prototype.createTable = function () {
-        var query = "\n            CREATE TABLE IF NOT EXISTS posts (\n                id TEXT PRIMARY KEY,\n                txt TEXT,\n                likes INTEGER\n            )\n        ";
+        var query = "\n            CREATE TABLE IF NOT EXISTS posts (\n                id TEXT PRIMARY KEY,\n                title TEXT,\n                text TEXT,\n                likes INTEGER,\n                data TEXT\n            )\n        ";
         this.db.run(query, function (err) {
             if (err) {
                 console.error('Erro ao criar a tabela:', err);
             }
             else {
-                console.log('Tabela criada com sucesso!');
+                console.log('Tabela criada com sucesso!!!');
             }
         });
     };
@@ -67,7 +67,6 @@ var Data = /** @class */ (function () {
             var query_1;
             var _this = this;
             return __generator(this, function (_a) {
-                // !qual tipo de retorno deveria ser usado em typescript aqui
                 try {
                     query_1 = "SELECT * FROM posts";
                     return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -92,37 +91,42 @@ var Data = /** @class */ (function () {
     };
     Data.prototype.create = function (post) {
         return __awaiter(this, void 0, void 0, function () {
-            var query, error_1;
+            var query_2;
+            var _this = this;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        query = "INSERT INTO posts (id, text, likes) VALUES (?, ?, ?)";
-                        return [4 /*yield*/, this.db.run(query, [post.id, post.text, post.likes])];
-                    case 1:
-                        _a.sent();
-                        console.log('post inserido com sucesso!');
-                        return [3 /*break*/, 3];
-                    case 2:
-                        error_1 = _a.sent();
-                        console.error('Erro ao inserir post:', error_1);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
+                try {
+                    query_2 = "INSERT INTO posts (id, title, text, likes) VALUES (?, ?, ?, ?)";
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            _this.db.run(query_2, [post.id, post.title, post.text, post.likes], function (err) {
+                                if (err) {
+                                    console.error('Erro ao inserir dados:', err);
+                                    reject(err);
+                                }
+                                else {
+                                    console.log('Dados inseridos com sucesso!');
+                                    // resolve();
+                                }
+                            });
+                        })];
                 }
+                catch (error) {
+                    console.error('Erro ao inserir dados:', error);
+                    throw error;
+                }
+                return [2 /*return*/];
             });
         });
     };
     Data.prototype.retrieve = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var query_2;
+            var query_3;
             var _this = this;
             return __generator(this, function (_a) {
                 //. quando o ID não é encontrado retorna unfedined e não da erro
                 try {
-                    query_2 = "SELECT * FROM posts WHERE id = ?";
+                    query_3 = "SELECT * FROM posts WHERE id = ?";
                     return [2 /*return*/, new Promise(function (resolve, reject) {
-                            _this.db.get(query_2, [id], function (err, row) {
-                                // ! pode dar algum bug pelo tipo do row
+                            _this.db.get(query_3, [id], function (err, row) {
                                 if (err) {
                                     console.error('Erro ao obter post:', err);
                                     reject(err);
@@ -130,6 +134,7 @@ var Data = /** @class */ (function () {
                                 }
                                 else {
                                     resolve(row);
+                                    // return row;
                                 }
                             });
                         })];
@@ -143,9 +148,9 @@ var Data = /** @class */ (function () {
         });
     };
     ;
-    Data.prototype.update = function (id, novoText, novoLike) {
+    Data.prototype.update = function (id, novoTitle, novoText, novoLike) {
         return __awaiter(this, void 0, void 0, function () {
-            var updateQuery, paramsUpdate, query_3;
+            var updateQuery, paramsUpdate, query_4;
             var _this = this;
             return __generator(this, function (_a) {
                 updateQuery = 'UPDATE posts SET';
@@ -154,18 +159,21 @@ var Data = /** @class */ (function () {
                     updateQuery += ' text = ?,';
                     paramsUpdate.push(novoText);
                 }
+                if (novoTitle !== '') {
+                    updateQuery += ' title = ?,';
+                    paramsUpdate.push(novoText); //; CHECAR SE ESTA CERTO
+                }
                 if (novoLike !== undefined) {
                     updateQuery += ' likes = ?,';
                     paramsUpdate.push(novoLike.toString());
-                    // .verificar se vai ter algum bug
                 }
                 updateQuery = updateQuery.slice(0, -1); //pra tirar a vírgula da query
                 updateQuery += ' WHERE id = ?';
                 paramsUpdate.push(id);
                 try {
-                    query_3 = "SELECT * FROM posts WHERE id = ?";
+                    query_4 = "SELECT * FROM posts WHERE id = ?";
                     return [2 /*return*/, new Promise(function (resolve, reject) {
-                            _this.db.get(query_3, [id], function (err, row) {
+                            _this.db.get(query_4, [id], function (err, row) {
                                 if (err) {
                                     console.error('Erro ao obter post:', err);
                                     reject(err);
@@ -195,13 +203,13 @@ var Data = /** @class */ (function () {
     };
     Data.prototype.delete = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var query_4;
+            var query_5;
             var _this = this;
             return __generator(this, function (_a) {
                 try {
-                    query_4 = "SELECT * FROM posts WHERE id = ?";
+                    query_5 = "SELECT * FROM posts WHERE id = ?";
                     return [2 /*return*/, new Promise(function (resolve, reject) {
-                            _this.db.get(query_4, [id], function (err, row) {
+                            _this.db.get(query_5, [id], function (err, row) {
                                 if (err) {
                                     console.error('Erro ao obter post:', err);
                                     reject(err);

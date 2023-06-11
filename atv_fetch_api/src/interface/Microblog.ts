@@ -1,7 +1,5 @@
-// import {sqlite3} from 'sqlite3';
 import * as sqlite3 from 'sqlite3';
 
-// const {sqlite3} = require('sqlite3');
 
 import { Post } from './post';
 
@@ -114,14 +112,15 @@ export class Data {
         }
         if (novoTitle !== '') {
             updateQuery += ' title = ?,';
-            paramsUpdate.push(novoText); //; CHECAR SE ESTA CERTO
+            paramsUpdate.push(novoText);
         }
         if (novoLike !== undefined) {
             updateQuery += ' likes = ?,';
             paramsUpdate.push(novoLike.toString());
         }
 
-        updateQuery = updateQuery.slice(0, -1); //pra tirar a vírgula da query
+        updateQuery = updateQuery.slice(0, -1); 
+        //pra tirar a vírgula da query
 
         updateQuery += ' WHERE id = ?';
         paramsUpdate.push(id);
@@ -169,7 +168,6 @@ export class Data {
                             if (err) {
                                 console.error('Erro ao atualizar post:', err);
                             } else {
-                                // só precisa de um print não precisa resolve
                                 return (console.log('post excluido com sucesso!'));
                             }
                         });

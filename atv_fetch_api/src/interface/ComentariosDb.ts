@@ -50,8 +50,6 @@ export class ComentariosDb {
                         console.error('Erro ao obter comentarios:', err);
                         reject(err);
                     } else {
-                        // const comentarios = rows.map((row:any) => row.comentario);
-                        // console.log(comentarios);
                         resolve(rows);
                     }
                 });
@@ -113,10 +111,7 @@ export class ComentariosDb {
                     if (err) {
                         console.error('Erro ao obter Comentario:', err);
                         reject(err)
-                        // return null
                     } else {
-                        // console.log(row);
-                        // resolve(row);
                         return row;
                     }
                 });
@@ -129,7 +124,6 @@ export class ComentariosDb {
 
 
     async update(comentarioId: string, novoComentario: string) { //!testar
-        //para verificar se o usuário quer modificar text, likes ou os dois
         let updateQuery = 'UPDATE Comentarios SET';
         const paramsUpdate: string[] = [];
 
@@ -186,7 +180,6 @@ export class ComentariosDb {
                             if (err) {
                                 console.error('Erro ao atualizar comentario:', err);
                             } else {
-                                // só precisa de um print não precisa resolve
                                 return (console.log('comentario excluido com sucesso!'));
                             }
                         });
